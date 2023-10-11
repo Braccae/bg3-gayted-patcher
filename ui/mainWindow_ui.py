@@ -16,9 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QHBoxLayout, QLineEdit,
-    QMainWindow, QMenuBar, QPushButton, QSizePolicy,
-    QSpacerItem, QStatusBar, QTabWidget, QToolButton,
-    QWidget)
+    QMainWindow, QPushButton, QScrollArea, QSizePolicy,
+    QSpacerItem, QStatusBar, QTabWidget, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -29,16 +28,26 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayoutWidget = QWidget(self.centralwidget)
         self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
-        self.horizontalLayoutWidget.setGeometry(QRect(0, 470, 801, 80))
-        self.horizontalLayout = QHBoxLayout(self.horizontalLayoutWidget)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayoutWidget.setGeometry(QRect(0, 469, 801, 101))
+        self.consoleLayout = QHBoxLayout(self.horizontalLayoutWidget)
+        self.consoleLayout.setObjectName(u"consoleLayout")
+        self.consoleLayout.setContentsMargins(0, 0, 0, 0)
+        self.scrollArea = QScrollArea(self.horizontalLayoutWidget)
+        self.scrollArea.setObjectName(u"scrollArea")
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollAreaWidgetContents = QWidget()
+        self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 797, 97))
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+
+        self.consoleLayout.addWidget(self.scrollArea)
+
         self.verticalTabWidget = QTabWidget(self.centralwidget)
         self.verticalTabWidget.setObjectName(u"verticalTabWidget")
         self.verticalTabWidget.setGeometry(QRect(0, 0, 801, 451))
-        self.tab = QWidget()
-        self.tab.setObjectName(u"tab")
-        self.horizontalLayoutWidget_2 = QWidget(self.tab)
+        self.tab_modExtraction = QWidget()
+        self.tab_modExtraction.setObjectName(u"tab_modExtraction")
+        self.horizontalLayoutWidget_2 = QWidget(self.tab_modExtraction)
         self.horizontalLayoutWidget_2.setObjectName(u"horizontalLayoutWidget_2")
         self.horizontalLayoutWidget_2.setGeometry(QRect(0, 10, 801, 51))
         self.horizontalLayout_2 = QHBoxLayout(self.horizontalLayoutWidget_2)
@@ -48,51 +57,41 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addItem(self.verticalSpacer_4)
 
-        self.lineEdit = QLineEdit(self.horizontalLayoutWidget_2)
-        self.lineEdit.setObjectName(u"lineEdit")
+        self.textfield_modDir = QLineEdit(self.horizontalLayoutWidget_2)
+        self.textfield_modDir.setObjectName(u"textfield_modDir")
 
-        self.horizontalLayout_2.addWidget(self.lineEdit)
-
-        self.toolButton = QToolButton(self.horizontalLayoutWidget_2)
-        self.toolButton.setObjectName(u"toolButton")
-        self.toolButton.setBaseSize(QSize(0, 0))
-
-        self.horizontalLayout_2.addWidget(self.toolButton)
+        self.horizontalLayout_2.addWidget(self.textfield_modDir)
 
         self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.horizontalLayout_2.addItem(self.verticalSpacer_3)
 
-        self.checkBox = QCheckBox(self.horizontalLayoutWidget_2)
-        self.checkBox.setObjectName(u"checkBox")
+        self.checkbox_autodetectMods = QCheckBox(self.horizontalLayoutWidget_2)
+        self.checkbox_autodetectMods.setObjectName(u"checkbox_autodetectMods")
 
-        self.horizontalLayout_2.addWidget(self.checkBox)
+        self.horizontalLayout_2.addWidget(self.checkbox_autodetectMods)
 
         self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.horizontalLayout_2.addItem(self.verticalSpacer_2)
 
-        self.pushButton = QPushButton(self.horizontalLayoutWidget_2)
-        self.pushButton.setObjectName(u"pushButton")
+        self.button_extractProgressions = QPushButton(self.horizontalLayoutWidget_2)
+        self.button_extractProgressions.setObjectName(u"button_extractProgressions")
 
-        self.horizontalLayout_2.addWidget(self.pushButton)
+        self.horizontalLayout_2.addWidget(self.button_extractProgressions)
 
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.horizontalLayout_2.addItem(self.verticalSpacer)
 
-        self.verticalTabWidget.addTab(self.tab, "")
-        self.tab_2 = QWidget()
-        self.tab_2.setObjectName(u"tab_2")
-        self.verticalTabWidget.addTab(self.tab_2, "")
-        self.tab_3 = QWidget()
-        self.tab_3.setObjectName(u"tab_3")
-        self.verticalTabWidget.addTab(self.tab_3, "")
+        self.verticalTabWidget.addTab(self.tab_modExtraction, "")
+        self.tab_mergeProgressions = QWidget()
+        self.tab_mergeProgressions.setObjectName(u"tab_mergeProgressions")
+        self.verticalTabWidget.addTab(self.tab_mergeProgressions, "")
+        self.tab_modifyProgressions = QWidget()
+        self.tab_modifyProgressions.setObjectName(u"tab_modifyProgressions")
+        self.verticalTabWidget.addTab(self.tab_modifyProgressions, "")
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QMenuBar(MainWindow)
-        self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 804, 22))
-        MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
@@ -107,17 +106,10 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-#if QT_CONFIG(tooltip)
-        self.toolButton.setToolTip("")
-#endif // QT_CONFIG(tooltip)
-#if QT_CONFIG(whatsthis)
-        self.toolButton.setWhatsThis("")
-#endif // QT_CONFIG(whatsthis)
-        self.toolButton.setText(QCoreApplication.translate("MainWindow", u"browse for userdirectory", None))
-        self.checkBox.setText(QCoreApplication.translate("MainWindow", u"use autodetected user directories", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Extract Progressions.lsx", None))
-        self.verticalTabWidget.setTabText(self.verticalTabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Page", None))
-        self.verticalTabWidget.setTabText(self.verticalTabWidget.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Page", None))
-        self.verticalTabWidget.setTabText(self.verticalTabWidget.indexOf(self.tab_3), QCoreApplication.translate("MainWindow", u"Page", None))
+        self.checkbox_autodetectMods.setText(QCoreApplication.translate("MainWindow", u"use autodetected user directories", None))
+        self.button_extractProgressions.setText(QCoreApplication.translate("MainWindow", u"Extract Progressions.lsx", None))
+        self.verticalTabWidget.setTabText(self.verticalTabWidget.indexOf(self.tab_modExtraction), QCoreApplication.translate("MainWindow", u"Extract Progressions", None))
+        self.verticalTabWidget.setTabText(self.verticalTabWidget.indexOf(self.tab_mergeProgressions), QCoreApplication.translate("MainWindow", u"Merge", None))
+        self.verticalTabWidget.setTabText(self.verticalTabWidget.indexOf(self.tab_modifyProgressions), QCoreApplication.translate("MainWindow", u"Modify", None))
     # retranslateUi
 
