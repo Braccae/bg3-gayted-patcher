@@ -1,33 +1,36 @@
-import xml.etree.ElementTree as ET
-import argparse
+import os
+import shutil
 
-# Parse command line arguments
-parser = argparse.ArgumentParser()
-parser.add_argument('-i', '--input', help='Path to input file', required=True)
-parser.add_argument('-o', '--output', help='Path to output file', required=True)
-parser.add_argument('-c', '--classes', nargs='+', help='Classes to match', required=True)
-parser.add_argument('-l', '--levels', nargs='+', help='Levels to match', required=True)
-args = parser.parse_args()
+class FeatsPatcher:
+    def __init__(self, input_dir, output_dir, levels, classes):
+        self.input_dir = input_dir
+        self.output_dir = output_dir
+        self.levels = levels
+        self.classes = classes
 
-# Parse XML
-tree = ET.parse(args.input)
-root = tree.getroot()
+    def patch_feats(self):
+        # Ensure output directory exists
+        os.makedirs(self.output_dir, exist_ok=True)
 
-# Iterate over nodes
-for node in root.iter('node'):
-    if node.attrib.get('id') == 'Progression':
-        name = node.find("./attribute[@id='Name']")
-        level = node.find("./attribute[@id='Level']")
-        if name is not None and level is not None:
-            if name.attrib.get('value') in args.classes and level.attrib.get('value') in args.levels:
-                allow_improvement = node.find("./attribute[@id='AllowImprovement']")
-                if allow_improvement is not None:
-                    allow_improvement.attrib['value'] = 'True'
-                else:
-                    new_attr = ET.SubElement(node, 'attribute')
-                    new_attr.attrib['id'] = 'AllowImprovement'
-                    new_attr.attrib['type'] = 'bool'
-                    new_attr.attrib['value'] = 'True'
+        for level in self.levels:
+            for class_name in self.classes:
+                # Construct the input and output file paths
+                input_file = os.path.join(self.input_dir, f"feats_{level}_{class_name}.txt")
+                output_file = os.path.join(self.output_dir, f"patched_feats_{level}_{class_name}.txt")
 
-# Write back to file
-tree.write(args.output, xml_declaration=True, encoding='UTF-8')
+                # Patch the feats file
+                self._patch_file(input_file, output_file)
+
+    def _patch_file(self, input_file, output_file):
+        # Perform the desired patching logic here
+        # This is just a placeholder, replace it with your actual logic
+        shutil.copy2(input_file, output_file)
+
+# Example usage
+input_dir = 'input_directory'
+output_dir = 'output_directory'
+levels = [1, 2, 3]
+classes = ['class1', 'class2', 'class3']
+
+feats_patcher = FeatsPatcher(input_dir, output_dir, levels, classes)
+feats_patcher.patch_feats()
